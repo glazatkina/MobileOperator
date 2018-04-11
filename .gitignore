@@ -1,1 +1,4 @@
 db_schema.mwb.bak
+.gradle
+.idea
+build

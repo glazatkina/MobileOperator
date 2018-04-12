@@ -39,8 +39,7 @@
                 <!--<value>ru.tsystems.javaschool.mobile_operator.entity.TariffOption</value>-->
                 <!--<value>ru.tsystems.javaschool.mobile_operator.entity.TariffService</value>-->
                 <value>ru.tsystems.javaschool.mobile_operator.entity.TypeUser</value>
-                <!--<value>ru.tsystems.javaschool.mobile_operator.entity.User</value>-->
-                <!--<value>ru.tsystems.javaschool.mobile_operator.entity.UserContract</value>-->
+                <value>ru.tsystems.javaschool.mobile_operator.entity.User</value>
             </list>
         </property>
     </bean>

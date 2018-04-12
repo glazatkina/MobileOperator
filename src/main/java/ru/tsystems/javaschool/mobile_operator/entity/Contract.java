@@ -14,6 +14,8 @@ public class Contract {
     private Date startDate;
     private Date endDate;
     private boolean isActive;
+    private long customerId;
+    private long employeeId;
 //    private Collection<ContractBlocking> contractBlockingsById;
 //    private Collection<ContractOption> contractOptionsById;
 //    private Collection<ContractTariff> contractTariffsById;
@@ -79,6 +81,26 @@ public class Contract {
         isActive = active;
     }
 
+    @Basic
+    @Column(name = "customer_id", nullable = false)
+    public long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(long customerId) {
+        this.customerId = customerId;
+    }
+
+    @Basic
+    @Column(name = "employee_id", nullable = false)
+    public long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(long employeeId) {
+        this.employeeId = employeeId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -123,14 +145,5 @@ public class Contract {
 //
 //    public void setContractTariffsById(Collection<ContractTariff> contractTariffsById) {
 //        this.contractTariffsById = contractTariffsById;
-//    }
-//
-//    @OneToMany(mappedBy = "contractByContractId")
-//    public Collection<UserContract> getUserContractsById() {
-//        return userContractsById;
-//    }
-//
-//    public void setUserContractsById(Collection<UserContract> userContractsById) {
-//        this.userContractsById = userContractsById;
 //    }
 }

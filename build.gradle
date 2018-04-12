@@ -1,15 +1,49 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.bmuschko:gradle-cargo-plugin:2.3'
+    }
+}
+
 group 'ru.tsystems.javaschool'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'war'
+apply plugin: 'com.bmuschko.cargo'
 
-sourceCompatibility = 1.5
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.14.RELEASE'
+    compile group: 'org.springframework', name: 'spring-orm', version: '4.3.14.RELEASE'
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.16.Final'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.46'
+    compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.2.0'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.5'
+}
+
+cargo {
+    containerId = 'tomcat9x'
+    port = 9090
+
+    deployable {
+        context = 'mobile-operator'
+    }
+
+    local {
+        homeDir = file(System.getenv().get('CATALINA_HOME'))
+        outputFile = file('build/output.log')
+
+        containerProperties {
+            property 'cargo.tomcat.ajp.port', 9099
+        }
+    }
 }

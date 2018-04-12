@@ -1,0 +1,1 @@
+mysqldump -h localhost -P 3306 -u root -p12345678 -r mobile_operator.sql -B mobile_operator

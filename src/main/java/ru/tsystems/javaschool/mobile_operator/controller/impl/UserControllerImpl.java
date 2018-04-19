@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.tsystems.javaschool.mobile_operator.controller.UserController;
-import ru.tsystems.javaschool.mobile_operator.entity.User;
+import ru.tsystems.javaschool.mobile_operator.dto.UserDTO;
 import ru.tsystems.javaschool.mobile_operator.service.UserService;
 
 import javax.persistence.EntityNotFoundException;
@@ -26,13 +26,13 @@ public class UserControllerImpl implements UserController {
 
     @Override
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<List<UserDTO>> findAll() {
         return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("{id}")
-    public ResponseEntity<User> find(@PathVariable long id) {
+    public ResponseEntity<UserDTO> find(@PathVariable long id) {
         try {
             return new ResponseEntity<>(service.find(id), HttpStatus.OK);
         }catch (EntityNotFoundException e) {

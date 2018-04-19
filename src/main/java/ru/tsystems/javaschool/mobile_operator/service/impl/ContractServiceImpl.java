@@ -5,12 +5,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.javaschool.mobile_operator.dao.ContractDAO;
+import ru.tsystems.javaschool.mobile_operator.dto.ContractDTO;
 import ru.tsystems.javaschool.mobile_operator.entity.Contract;
 import ru.tsystems.javaschool.mobile_operator.service.ContractService;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ContractServiceImpl implements ContractService {
@@ -24,28 +27,38 @@ public class ContractServiceImpl implements ContractService {
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.SUPPORTS, readOnly =
             true)
-    public List<Contract> findAll() {
-        return contractDAO.findAll();
+    public List<ContractDTO> findAll() {
+        List<Contract> contracts = contractDAO.findAll();
+        List<ContractDTO> contractDTOS = new ArrayList<>();
+        for (Contract contract: contracts) {
+            ContractDTO contractDTO = new ContractDTO(contract);
+            contractDTO.fill(contract.getCustomer());
+            contractDTOS.add(contractDTO);
+        }
+        return contractDTOS;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.SUPPORTS, readOnly =
             true)
-    public Contract find(String phoneNumber) {
+    public ContractDTO find(String phoneNumber) {
         Contract contract = contractDAO.findByPhoneNumber(phoneNumber);
         if (contract == null) {
             throw new EntityNotFoundException("Contract " + phoneNumber + " not found");
         }
-        return contract;
+        ContractDTO contractDTO = new ContractDTO(contract);
+        contractDTO.fill(contract.getCustomer());
+        return contractDTO;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public void save(Contract contract) {
+    public void save(ContractDTO contract) {
         if (contractDAO.isExists(contract.getPhoneNumber())) {
             throw new EntityExistsException("Contract " + contract.getPhoneNumber() + " is already exist");
         }
-        contractDAO.save(contract);
+        Contract contract1 = contract.toEntity();
+        contractDAO.save(contract1);
     }
 
     @Override
@@ -54,7 +67,7 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public int getBalance(Contract contract) {
-        return 0;
+    public long getBalance(ContractDTO contract) {
+        return contract.getBalance();
     }
 }

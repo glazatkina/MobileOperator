@@ -6,7 +6,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "measure", schema = "mobile_operator", catalog = "")
+@Table(name = "measure", schema = "mobile_operator")
 public class Measure implements Serializable {
     private long id;
     private String name;

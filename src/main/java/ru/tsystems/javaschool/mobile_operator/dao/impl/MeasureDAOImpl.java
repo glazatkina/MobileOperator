@@ -22,6 +22,7 @@ public class MeasureDAOImpl implements MeasureDAO {
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.SUPPORTS, readOnly =
             true)
+    @SuppressWarnings("unchecked")
     public List<Measure> findAll() {
         return sessionFactory.getCurrentSession()
                 .createQuery("from Measure")
@@ -39,6 +40,7 @@ public class MeasureDAOImpl implements MeasureDAO {
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.SUPPORTS, readOnly =
             true)
+    @SuppressWarnings("unchecked")
     public Measure findByName(String name) {
         return (Measure) sessionFactory.getCurrentSession()
                 .createQuery("from Measure measure where measure.name = ?1")
@@ -51,6 +53,7 @@ public class MeasureDAOImpl implements MeasureDAO {
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.SUPPORTS, readOnly =
             true)
+    @SuppressWarnings("unchecked")
     public boolean isExists(String name) {
         return sessionFactory.getCurrentSession()
                 .createQuery("select measure.name from Measure measure where measure.name = ?1")

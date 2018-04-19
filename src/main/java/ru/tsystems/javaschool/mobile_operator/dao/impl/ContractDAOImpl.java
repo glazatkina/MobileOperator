@@ -1,5 +1,6 @@
 package ru.tsystems.javaschool.mobile_operator.dao.impl;
 
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,10 +23,16 @@ public class ContractDAOImpl implements ContractDAO {
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.SUPPORTS, readOnly =
             true)
+    @SuppressWarnings("unchecked")
     public List<Contract> findAll() {
-        return sessionFactory.getCurrentSession()
-                .createQuery("from Contract")
+        List<Contract> contracts = sessionFactory.getCurrentSession()
+                .createQuery("select c from Contract c join fetch c.customer u")
                 .list();
+        for (Contract c : contracts) {
+            if (!Hibernate.isInitialized(c.getCustomer()))
+                Hibernate.initialize(c.getCustomer());
+        }
+        return contracts;
     }
 
     @Override
@@ -39,6 +46,7 @@ public class ContractDAOImpl implements ContractDAO {
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.SUPPORTS, readOnly =
             true)
+    @SuppressWarnings("unchecked")
     public Contract findByPhoneNumber(String phoneNumber) {
         return (Contract) sessionFactory.getCurrentSession()
                 .createQuery("from Contract contract where contract.phoneNumber = ?1")
@@ -51,6 +59,7 @@ public class ContractDAOImpl implements ContractDAO {
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.SUPPORTS, readOnly =
             true)
+    @SuppressWarnings("unchecked")
     public boolean isExists(String phoneNumber) {
         return sessionFactory.getCurrentSession()
                 .createQuery("select contract.phoneNumber from Contract contract " +
@@ -63,6 +72,7 @@ public class ContractDAOImpl implements ContractDAO {
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.SUPPORTS, readOnly =
             true)
+    @SuppressWarnings("unchecked")
     public boolean isActive(String phoneNumber) {
         return sessionFactory.getCurrentSession()
                 .createQuery("select contract.active from Contract contract " +

@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.tsystems.javaschool.mobile_operator.controller.ContractController;
-import ru.tsystems.javaschool.mobile_operator.entity.Contract;
+import ru.tsystems.javaschool.mobile_operator.dto.ContractDTO;
 import ru.tsystems.javaschool.mobile_operator.service.ContractService;
 
 import javax.persistence.EntityExistsException;
@@ -25,13 +25,13 @@ public class ContractControllerImpl implements ContractController {
 
     @Override
     @GetMapping
-    public ResponseEntity<List<Contract>> findAll() {
+    public ResponseEntity<List<ContractDTO>> findAll() {
         return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/find_contract")
-    public ResponseEntity<Contract> find(@RequestParam String phoneNumber) {
+    public ResponseEntity<ContractDTO> find(@RequestParam String phoneNumber) {
         try {
             return new ResponseEntity<>(service.find(phoneNumber), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
@@ -41,7 +41,7 @@ public class ContractControllerImpl implements ContractController {
 
     @Override
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody Contract contract) {
+    public ResponseEntity<Void> save(@RequestBody ContractDTO contract) {
         try {
             service.save(contract);
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -52,7 +52,7 @@ public class ContractControllerImpl implements ContractController {
 
     @Override
     @PutMapping
-    public ResponseEntity<Void> closeContract(Contract contract) {
+    public ResponseEntity<Void> closeContract(ContractDTO contract) {
         try {
             service.closeContract(contract.getPhoneNumber());
             return new ResponseEntity<>(HttpStatus.OK);
@@ -63,11 +63,9 @@ public class ContractControllerImpl implements ContractController {
 
     @Override
     @GetMapping("/{phoneNumber}/balance")
-    //spring security
-    //power mockito
     public ResponseEntity<Void> getBalance(@PathVariable String phoneNumber) {
         try {
-//            service.getBalance()
+            service.getBalance(service.find(phoneNumber));
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

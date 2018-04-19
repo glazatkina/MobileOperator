@@ -40,6 +40,7 @@ public class TypeUserDAOImpl implements TypeUserDAO {
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.SUPPORTS, readOnly =
             true)
+    @SuppressWarnings("unchecked")
     public TypeUser findByName(String name) {
         return (TypeUser) sessionFactory.getCurrentSession()
                 .createQuery("from TypeUser typeUser where typeUser.name = ?1")
@@ -52,6 +53,7 @@ public class TypeUserDAOImpl implements TypeUserDAO {
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.SUPPORTS, readOnly =
             true)
+    @SuppressWarnings("unchecked")
     public boolean isExists(String name) {
         return sessionFactory.getCurrentSession()
                 .createQuery("select typeUser.name from TypeUser typeUser where typeUser.name = ?1")

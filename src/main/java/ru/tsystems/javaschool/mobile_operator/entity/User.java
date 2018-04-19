@@ -1,13 +1,17 @@
 package ru.tsystems.javaschool.mobile_operator.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "user", schema = "mobile_operator", catalog = "")
-public class User {
+@Table(name = "user", schema = "mobile_operator")
+public class User implements Serializable {
     private long id;
     private String name;
     private String surname;
@@ -16,10 +20,9 @@ public class User {
     private String address;
     private String email;
     private long password;
-    private long typeId;
 //    private Collection<ContractBlocking> contractBlockingsById;
-//    private TypeUser typeUserByTypeId;
-//    private Collection<UserContract> userContractsById;
+    private TypeUser typeId;
+    private Collection<Contract> userContractsById;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -101,16 +104,6 @@ public class User {
         this.password = password;
     }
 
-    @Basic
-    @Column(name = "type_id", nullable = false)
-    public long getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(long typeId) {
-        this.typeId = typeId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -129,7 +122,6 @@ public class User {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(id, name, surname, dateBirth, passport, address, email, password, typeId);
     }
 
@@ -142,22 +134,22 @@ public class User {
 //        this.contractBlockingsById = contractBlockingsById;
 //    }
 //
-//    @ManyToOne
-//    @JoinColumn(name = "type_id", referencedColumnName = "id", nullable = false)
-//    public TypeUser getTypeUserByTypeId() {
-//        return typeUserByTypeId;
-//    }
-//
-//    public void setTypeUserByTypeId(TypeUser typeUserByTypeId) {
-//        this.typeUserByTypeId = typeUserByTypeId;
-//    }
-//
-//    @OneToMany(mappedBy = "userByUserId")
-//    public Collection<UserContract> getUserContractsById() {
-//        return userContractsById;
-//    }
-//
-//    public void setUserContractsById(Collection<UserContract> userContractsById) {
-//        this.userContractsById = userContractsById;
-//    }
+    @ManyToOne
+    @JoinColumn(name = "type_id", referencedColumnName = "id", nullable = false)
+    public TypeUser getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(TypeUser typeId) {
+        this.typeId = typeId;
+    }
+
+    @OneToMany(mappedBy = "customer")
+    public Collection<Contract> getUserContractsById() {
+        return userContractsById;
+    }
+
+    public void setUserContractsById(Collection<Contract> userContractsById) {
+        this.userContractsById = userContractsById;
+    }
 }

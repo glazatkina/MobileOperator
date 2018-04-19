@@ -1,5 +1,6 @@
 package ru.tsystems.javaschool.mobile_operator.dao.impl;
 
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,6 +23,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.SUPPORTS, readOnly =
             true)
+    @SuppressWarnings("unchecked")
     public List<User> findAll() {
         return sessionFactory.getCurrentSession()
                 .createQuery("from User")
@@ -32,7 +34,9 @@ public class UserDAOImpl implements UserDAO {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.SUPPORTS, readOnly =
             true)
     public User findById(long id) {
-        return sessionFactory.getCurrentSession()
+        User user = sessionFactory.getCurrentSession()
                 .get(User.class, id);
+        Hibernate.initialize(user.getUserContractsById());
+        return user;
     }
 }

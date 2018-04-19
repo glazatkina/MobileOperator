@@ -1,21 +1,21 @@
 package ru.tsystems.javaschool.mobile_operator.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "contract", schema = "mobile_operator", catalog = "")
-public class Contract {
+@Table(name = "contract", schema = "mobile_operator")
+public class Contract implements Serializable {
     private long id;
     private String phoneNumber;
     private long balance;
     private Date startDate;
     private Date endDate;
     private boolean isActive;
-    private long customerId;
-    private long employeeId;
+    private User customer;
 //    private Collection<ContractBlocking> contractBlockingsById;
 //    private Collection<ContractOption> contractOptionsById;
 //    private Collection<ContractTariff> contractTariffsById;
@@ -81,26 +81,6 @@ public class Contract {
         isActive = active;
     }
 
-    @Basic
-    @Column(name = "customer_id", nullable = false)
-    public long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(long customerId) {
-        this.customerId = customerId;
-    }
-
-    @Basic
-    @Column(name = "employee_id", nullable = false)
-    public long getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(long employeeId) {
-        this.employeeId = employeeId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -116,7 +96,6 @@ public class Contract {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(id, phoneNumber, balance, startDate, endDate, isActive);
     }
 //
@@ -146,4 +125,13 @@ public class Contract {
 //    public void setContractTariffsById(Collection<ContractTariff> contractTariffsById) {
 //        this.contractTariffsById = contractTariffsById;
 //    }
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
+    public User getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(User customer) {
+        this.customer = customer;
+    }
 }

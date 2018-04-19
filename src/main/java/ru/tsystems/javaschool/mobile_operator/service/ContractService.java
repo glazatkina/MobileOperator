@@ -1,13 +1,14 @@
 package ru.tsystems.javaschool.mobile_operator.service;
 
+import ru.tsystems.javaschool.mobile_operator.dto.ContractDTO;
 import ru.tsystems.javaschool.mobile_operator.entity.Contract;
 
 import java.util.List;
 
 public interface ContractService {
-    List<Contract> findAll();
-    Contract find(String phoneNumber);
-    void save(Contract contract);
+    List<ContractDTO> findAll();
+    ContractDTO find(String phoneNumber);
+    void save(ContractDTO contract);
     void closeContract(String phoneNumber);
-    int getBalance(Contract contract);
+    long getBalance(ContractDTO contract);
 }

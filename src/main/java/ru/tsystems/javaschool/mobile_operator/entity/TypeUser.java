@@ -1,15 +1,16 @@
 package ru.tsystems.javaschool.mobile_operator.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-@Table(name = "type_user", schema = "mobile_operator", catalog = "")
-public class TypeUser {
+@Table(name = "type_user", schema = "mobile_operator")
+public class TypeUser implements Serializable {
     private long id;
     private String name;
-//    private Collection<User> usersById;
+    private Collection<User> usersById;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -45,13 +46,13 @@ public class TypeUser {
 
         return Objects.hash(id, name);
     }
-//
-//    @OneToMany(mappedBy = "typeUserByTypeId")
-//    public Collection<User> getUsersById() {
-//        return usersById;
-//    }
-//
-//    public void setUsersById(Collection<User> usersById) {
-//        this.usersById = usersById;
-//    }
+
+    @OneToMany(mappedBy = "typeId")
+    public Collection<User> getUsersById() {
+        return usersById;
+    }
+
+    public void setUsersById(Collection<User> usersById) {
+        this.usersById = usersById;
+    }
 }

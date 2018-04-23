@@ -1,8 +1,5 @@
 package ru.tsystems.javaschool.mobile_operator.entity;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
@@ -21,7 +18,9 @@ public class User implements Serializable {
     private String email;
     private long password;
 //    private Collection<ContractBlocking> contractBlockingsById;
+    @Transient
     private TypeUser typeId;
+    @Transient
     private Collection<Contract> userContractsById;
 
     @Id

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.tsystems.javaschool.mobile_operator.controller.TypeUserController;
 import ru.tsystems.javaschool.mobile_operator.dto.TypeUserDTO;
-import ru.tsystems.javaschool.mobile_operator.entity.TypeUser;
 import ru.tsystems.javaschool.mobile_operator.service.TypeUserService;
 
 import javax.persistence.EntityNotFoundException;

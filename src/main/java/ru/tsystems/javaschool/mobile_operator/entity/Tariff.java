@@ -1,15 +1,17 @@
 package ru.tsystems.javaschool.mobile_operator.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Objects;
 
 @Entity
-public class Tariff {
+public class Tariff implements Serializable {
     private long id;
     private String name;
     private long priceConn;
     private boolean isActive;
+    @Transient
     private Collection<ContractTariff> contractTariffsById;
 //    private Collection<TariffOption> tariffOptionsById;
 //    private Collection<TariffService> tariffServicesById;

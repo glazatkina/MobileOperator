@@ -26,13 +26,10 @@ public class TypeUserServiceImpl implements TypeUserService {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.SUPPORTS, readOnly =
             true)
     public List<TypeUserDTO> findAll() {
-        List<TypeUserDTO> typeUserDTOS = typeUserDAO.findAll()
+        return typeUserDAO.findAll()
                 .stream()
-                .map(typeUser -> {
-                    return new TypeUserDTO(typeUser);
-                })
+                .map(TypeUserDTO::new)
                 .collect(Collectors.toList());
-        return typeUserDTOS;
     }
 
     @Override

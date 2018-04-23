@@ -15,6 +15,7 @@ public class Contract implements Serializable {
     private Date startDate;
     private Date endDate;
     private boolean isActive;
+    @Transient
     private User customer;
 //    private Collection<ContractBlocking> contractBlockingsById;
 //    private Collection<ContractOption> contractOptionsById;

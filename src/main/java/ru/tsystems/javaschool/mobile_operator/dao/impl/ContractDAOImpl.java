@@ -79,7 +79,7 @@ public class ContractDAOImpl implements ContractDAO {
                 "where contract.phoneNumber = ?1")
                 .setParameter(1, phoneNumber)
                 .stream()
-                .anyMatch(active -> {if (active.equals(true)) return true; else return false;});
+                .anyMatch(active -> active.equals(true));
     }
 
     @Override

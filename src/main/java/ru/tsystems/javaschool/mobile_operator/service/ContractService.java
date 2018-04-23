@@ -1,7 +1,6 @@
 package ru.tsystems.javaschool.mobile_operator.service;
 
 import ru.tsystems.javaschool.mobile_operator.dto.ContractDTO;
-import ru.tsystems.javaschool.mobile_operator.entity.Contract;
 
 import java.util.List;
 

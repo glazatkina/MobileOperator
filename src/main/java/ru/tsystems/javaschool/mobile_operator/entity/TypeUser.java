@@ -10,6 +10,7 @@ import java.util.Objects;
 public class TypeUser implements Serializable {
     private long id;
     private String name;
+    @Transient
     private Collection<User> usersById;
 
     @Id

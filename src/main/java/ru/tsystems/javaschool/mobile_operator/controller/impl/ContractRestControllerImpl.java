@@ -3,8 +3,6 @@ package ru.tsystems.javaschool.mobile_operator.controller.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.tsystems.javaschool.mobile_operator.controller.ContractController;
 import ru.tsystems.javaschool.mobile_operator.dto.ContractDTO;
@@ -14,33 +12,34 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
-@Controller
-@RequestMapping("/contracts")
-public class ContractControllerImpl {
+@RestController
+@RequestMapping("/contract")
+public class ContractRestControllerImpl implements ContractController {
 
     private ContractService service;
 
     @Autowired
-    public ContractControllerImpl(ContractService contractService) {
+    public ContractRestControllerImpl(ContractService contractService) {
         this.service = contractService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String findAll(Model model) {
-        model.addAttribute("contracts", service.findAll());
-        return "contracts";
+    @Override
+    @GetMapping
+    public ResponseEntity<List<ContractDTO>> findAll() {
+        return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "{phoneNumber}")
-    public String find(@PathVariable String phoneNumber, Model model) {
+    @Override
+    @GetMapping("{phoneNumber}")
+    public ResponseEntity<ContractDTO> find(@PathVariable String phoneNumber) {
         try {
-            model.addAttribute("contract", service.find(phoneNumber));
-            return "contract";
+            return new ResponseEntity<>(service.find(phoneNumber), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
-            return "not_found";
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
     }
 
+    @Override
     @PostMapping
     public ResponseEntity<Void> save(@RequestBody ContractDTO contract) {
         try {
@@ -51,6 +50,7 @@ public class ContractControllerImpl {
         }
     }
 
+    @Override
     @PutMapping
     public ResponseEntity<Void> closeContract(ContractDTO contract) {
         try {
@@ -61,6 +61,7 @@ public class ContractControllerImpl {
         }
     }
 
+    @Override
     @GetMapping("/{phoneNumber}/balance")
     public ResponseEntity<Void> getBalance(@PathVariable String phoneNumber) {
         try {

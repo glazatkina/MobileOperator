@@ -1,6 +1,5 @@
 package ru.tsystems.javaschool.mobile_operator.dto;
 
-import org.hibernate.mapping.Collection;
 import ru.tsystems.javaschool.mobile_operator.entity.TypeUser;
 import ru.tsystems.javaschool.mobile_operator.entity.User;
 

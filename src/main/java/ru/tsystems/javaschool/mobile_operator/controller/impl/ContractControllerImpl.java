@@ -1,8 +1,6 @@
 package ru.tsystems.javaschool.mobile_operator.controller.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +10,10 @@ import ru.tsystems.javaschool.mobile_operator.service.ContractService;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
 
 @Controller
 @RequestMapping("/contracts")
-public class ContractControllerImpl {
+public class ContractControllerImpl implements ContractController {
 
     private ContractService service;
 
@@ -31,8 +28,9 @@ public class ContractControllerImpl {
         return "contracts";
     }
 
+    @Override
     @RequestMapping(method = RequestMethod.GET, path = "{phoneNumber}")
-    public String find(@PathVariable String phoneNumber, Model model) {
+    public String findByPhoneNumber(@PathVariable String phoneNumber, Model model) {
         try {
             model.addAttribute("contract", service.find(phoneNumber));
             return "contract";
@@ -41,33 +39,25 @@ public class ContractControllerImpl {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Void> save(@RequestBody ContractDTO contract) {
+    @Override
+    @RequestMapping(method = RequestMethod.POST)
+    public String save(@RequestBody ContractDTO contract, Model model) {
         try {
             service.save(contract);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return "operation_success";
         } catch (EntityExistsException e) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            return "operation_fail";
         }
     }
 
-    @PutMapping
-    public ResponseEntity<Void> closeContract(ContractDTO contract) {
+    @Override
+    @RequestMapping(method = RequestMethod.PUT)
+    public String lockContract(ContractDTO contract, Model model) {
         try {
             service.closeContract(contract.getPhoneNumber());
-            return new ResponseEntity<>(HttpStatus.OK);
+            return "operation_success";
         } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping("/{phoneNumber}/balance")
-    public ResponseEntity<Void> getBalance(@PathVariable String phoneNumber) {
-        try {
-            service.getBalance(service.find(phoneNumber));
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (EntityNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return "operation_fail";
         }
     }
 }

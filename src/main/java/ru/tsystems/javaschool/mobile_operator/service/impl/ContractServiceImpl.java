@@ -31,7 +31,7 @@ public class ContractServiceImpl implements ContractService {
         List<ContractDTO> contractDTOS = new ArrayList<>();
         for (Contract contract: contracts) {
             ContractDTO contractDTO = new ContractDTO(contract);
-            contractDTO.fill(contract.getCustomer());
+            contractDTO.fill(contract.getCustomer(), contract.getCurrentTariff(), contract.getContractTariffsById());
             contractDTOS.add(contractDTO);
         }
         return contractDTOS;
@@ -46,7 +46,7 @@ public class ContractServiceImpl implements ContractService {
             throw new EntityNotFoundException("Contract " + phoneNumber + " not found");
         }
         ContractDTO contractDTO = new ContractDTO(contract);
-        contractDTO.fill(contract.getCustomer());
+        contractDTO.fill(contract.getCustomer(), contract.getCurrentTariff(), contract.getContractTariffsById());
         return contractDTO;
     }
 

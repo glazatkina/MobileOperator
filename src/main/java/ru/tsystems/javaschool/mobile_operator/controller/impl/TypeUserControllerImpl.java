@@ -3,6 +3,7 @@ package ru.tsystems.javaschool.mobile_operator.controller.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,13 +25,11 @@ public class TypeUserControllerImpl implements TypeUserController {
         this.service = service;
     }
 
-    @Override
     @GetMapping
     public ResponseEntity<List<TypeUserDTO>> findAll() {
         return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
     }
 
-    @Override
     @GetMapping("/{name}")
     public ResponseEntity<TypeUserDTO> find(@PathVariable String name) {
         try {
@@ -38,5 +37,15 @@ public class TypeUserControllerImpl implements TypeUserController {
         }catch (EntityNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @Override
+    public String findAll(Model model) {
+        return null;
+    }
+
+    @Override
+    public String find(String name, Model model) {
+        return null;
     }
 }

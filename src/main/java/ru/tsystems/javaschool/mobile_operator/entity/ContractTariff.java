@@ -6,17 +6,15 @@ import java.sql.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "contract_tariff", schema = "mobile_operator", catalog = "")
+@Table(name = "contract_tariff", schema = "mobile_operator")
 public class ContractTariff implements Serializable {
     private long id;
-//    private long contractId;
-//    private long tariffId;
     private Date startDate;
     private Date endDate;
     @Transient
-    private Contract contractByContractId;
+    private Contract contractTariffsById;
     @Transient
-    private Tariff tariffByTariffId;
+    private Tariff tariffById;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -27,26 +25,6 @@ public class ContractTariff implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
-
-//    @Basic
-//    @Column(name = "contract_id", nullable = false)
-//    public long getContractId() {
-//        return contractId;
-//    }
-//
-//    public void setContractId(long contractId) {
-//        this.contractId = contractId;
-//    }
-//
-//    @Basic
-//    @Column(name = "tariff_id", nullable = false)
-//    public long getTariffId() {
-//        return tariffId;
-//    }
-//
-//    public void setTariffId(long tariffId) {
-//        this.tariffId = tariffId;
-//    }
 
     @Basic
     @Column(name = "start_date", nullable = false)
@@ -74,8 +52,6 @@ public class ContractTariff implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         ContractTariff that = (ContractTariff) o;
         return id == that.id &&
-//                contractId == that.contractId &&
-//                tariffId == that.tariffId &&
                 Objects.equals(startDate, that.startDate) &&
                 Objects.equals(endDate, that.endDate);
     }
@@ -88,21 +64,21 @@ public class ContractTariff implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "contract_id", referencedColumnName = "id", nullable = false)
-    public Contract getContractByContractId() {
-        return contractByContractId;
+    public Contract getContractTariffsById() {
+        return contractTariffsById;
     }
 
-    public void setContractByContractId(Contract contractByContractId) {
-        this.contractByContractId = contractByContractId;
+    public void setContractTariffsById(Contract contractTariffsById) {
+        this.contractTariffsById = contractTariffsById;
     }
 
     @ManyToOne
     @JoinColumn(name = "tariff_id", referencedColumnName = "id", nullable = false)
-    public Tariff getTariffByTariffId() {
-        return tariffByTariffId;
+    public Tariff getTariffById() {
+        return tariffById;
     }
 
-    public void setTariffByTariffId(Tariff tariffByTariffId) {
-        this.tariffByTariffId = tariffByTariffId;
+    public void setTariffById(Tariff tariffById) {
+        this.tariffById = tariffById;
     }
 }

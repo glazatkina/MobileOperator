@@ -29,7 +29,7 @@
 
 <div class="container">
     <p>Balance: ${contract.balance}</p>
-    <p>Tariff: <button class="btn btn-info
+    <p>Tariff: ${contract.tariff.name}<button class="btn btn-info
     <% if (contract.isActive()) {%>
     active
     <%} else {%>

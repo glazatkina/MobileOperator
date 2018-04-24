@@ -9,6 +9,6 @@ import java.util.List;
 public interface ContractTariffDAO {
     List<ContractTariff> findAll();
     ContractTariff findById(long id);
-    Tariff findByContract(Contract contract);
+    List<ContractTariff> findAllByContract(Contract contract);
     void save(ContractTariff contractTariff);
 }

@@ -1,20 +1,21 @@
-package ru.tsystems.javaschool.mobile_operator.controller.impl;
+package ru.tsystems.javaschool.mobile_operator.restcontroller.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import ru.tsystems.javaschool.mobile_operator.controller.ContractController;
 import ru.tsystems.javaschool.mobile_operator.dto.ContractDTO;
+import ru.tsystems.javaschool.mobile_operator.restcontroller.ContractRestController;
 import ru.tsystems.javaschool.mobile_operator.service.ContractService;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
-@RestController
-@RequestMapping("/contract")
-public class ContractRestControllerImpl implements ContractController {
+@Controller
+@RequestMapping("/rest_contracts")
+public class ContractRestControllerImpl implements ContractRestController {
 
     private ContractService service;
 
@@ -30,8 +31,8 @@ public class ContractRestControllerImpl implements ContractController {
     }
 
     @Override
-    @GetMapping("{phoneNumber}")
-    public ResponseEntity<ContractDTO> find(@PathVariable String phoneNumber) {
+    @GetMapping("/find_contract")
+    public ResponseEntity<ContractDTO> find(@RequestParam String phoneNumber) {
         try {
             return new ResponseEntity<>(service.find(phoneNumber), HttpStatus.OK);
         } catch (EntityNotFoundException e) {
@@ -39,7 +40,6 @@ public class ContractRestControllerImpl implements ContractController {
         }
     }
 
-    @Override
     @PostMapping
     public ResponseEntity<Void> save(@RequestBody ContractDTO contract) {
         try {
@@ -50,7 +50,6 @@ public class ContractRestControllerImpl implements ContractController {
         }
     }
 
-    @Override
     @PutMapping
     public ResponseEntity<Void> closeContract(ContractDTO contract) {
         try {
@@ -61,7 +60,6 @@ public class ContractRestControllerImpl implements ContractController {
         }
     }
 
-    @Override
     @GetMapping("/{phoneNumber}/balance")
     public ResponseEntity<Void> getBalance(@PathVariable String phoneNumber) {
         try {

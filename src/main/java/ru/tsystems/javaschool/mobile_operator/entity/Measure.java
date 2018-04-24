@@ -10,6 +10,7 @@ import java.util.Objects;
 public class Measure implements Serializable {
     private long id;
     private String name;
+//    @Transient
 //    private Collection<Option> optionsById;
 //    private Collection<Service> servicesById;
 
@@ -56,7 +57,7 @@ public class Measure implements Serializable {
         return Objects.hash(id, name);
     }
 
-//    @OneToMany(mappedBy = "measureByMeasureId")
+//    @OneToMany(mappedBy = "measure", fetch = FetchType.LAZY)
 //    public Collection<Option> getOptionsById() {
 //        return optionsById;
 //    }
@@ -64,7 +65,7 @@ public class Measure implements Serializable {
 //    public void setOptionsById(Collection<Option> optionsById) {
 //        this.optionsById = optionsById;
 //    }
-//
+
 //    @OneToMany(mappedBy = "measureByMeasureId")
 //    public Collection<Service> getServicesById() {
 //        return servicesById;

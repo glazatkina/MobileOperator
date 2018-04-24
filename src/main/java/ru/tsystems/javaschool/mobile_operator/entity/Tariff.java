@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Entity
+@Table(name = "tariff", schema = "mobile_operator")
 public class Tariff implements Serializable {
     private long id;
     private String name;
@@ -73,7 +74,7 @@ public class Tariff implements Serializable {
         return Objects.hash(id, name, priceConn, isActive);
     }
 
-    @OneToMany(mappedBy = "tariffByTariffId")
+    @OneToMany(mappedBy = "tariffById")
     public Collection<ContractTariff> getContractTariffsById() {
         return contractTariffsById;
     }

@@ -29,14 +29,14 @@
         <property name="annotatedClasses">
             <list>
                 <value>ru.tsystems.javaschool.mobile_operator.entity.Contract</value>
-                <!--<value>ru.tsystems.javaschool.mobile_operator.entity.ContractBlocking</value>-->
-                <!--<value>ru.tsystems.javaschool.mobile_operator.entity.ContractOption</value>-->
-                <!--<value>ru.tsystems.javaschool.mobile_operator.entity.ContractTariff</value>-->
+                <value>ru.tsystems.javaschool.mobile_operator.entity.ContractBlocking</value>
+                <value>ru.tsystems.javaschool.mobile_operator.entity.ContractOption</value>
+                <value>ru.tsystems.javaschool.mobile_operator.entity.ContractTariff</value>
                 <value>ru.tsystems.javaschool.mobile_operator.entity.Measure</value>
-                <!--<value>ru.tsystems.javaschool.mobile_operator.entity.Option</value>-->
-                <!--<value>ru.tsystems.javaschool.mobile_operator.entity.OptionOption</value>-->
+                <value>ru.tsystems.javaschool.mobile_operator.entity.Option</value>
+                <value>ru.tsystems.javaschool.mobile_operator.entity.OptionOption</value>
                 <!--<value>ru.tsystems.javaschool.mobile_operator.entity.Service</value>-->
-                <!--<value>ru.tsystems.javaschool.mobile_operator.entity.Tariff</value>-->
+                <value>ru.tsystems.javaschool.mobile_operator.entity.Tariff</value>
                 <!--<value>ru.tsystems.javaschool.mobile_operator.entity.TariffOption</value>-->
                 <!--<value>ru.tsystems.javaschool.mobile_operator.entity.TariffService</value>-->
                 <value>ru.tsystems.javaschool.mobile_operator.entity.TypeUser</value>

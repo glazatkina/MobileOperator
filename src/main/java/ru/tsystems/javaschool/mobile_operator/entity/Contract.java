@@ -17,9 +17,13 @@ public class Contract implements Serializable {
     private boolean isActive;
     @Transient
     private User customer;
-//    private Collection<ContractBlocking> contractBlockingsById;
+    @Transient
+    private Tariff currentTariff;
+    @Transient
+    private Collection<ContractBlocking> contractBlockingsById;
 //    private Collection<ContractOption> contractOptionsById;
-//    private Collection<ContractTariff> contractTariffsById;
+    @Transient
+    private Collection<ContractTariff> contractTariffsById;
 //    private Collection<UserContract> userContractsById;
 
     @Id
@@ -99,16 +103,16 @@ public class Contract implements Serializable {
     public int hashCode() {
         return Objects.hash(id, phoneNumber, balance, startDate, endDate, isActive);
     }
-//
-//    @OneToMany(mappedBy = "contractByContractId")
-//    public Collection<ContractBlocking> getContractBlockingsById() {
-//        return contractBlockingsById;
-//    }
-//
-//    public void setContractBlockingsById(Collection<ContractBlocking> contractBlockingsById) {
-//        this.contractBlockingsById = contractBlockingsById;
-//    }
-//
+
+    @OneToMany(mappedBy = "blockedContract", fetch = FetchType.LAZY)
+    public Collection<ContractBlocking> getContractBlockingsById() {
+        return contractBlockingsById;
+    }
+
+    public void setContractBlockingsById(Collection<ContractBlocking> contractBlockingsById) {
+        this.contractBlockingsById = contractBlockingsById;
+    }
+
 //    @OneToMany(mappedBy = "contractByContractId")
 //    public Collection<ContractOption> getContractOptionsById() {
 //        return contractOptionsById;
@@ -118,15 +122,16 @@ public class Contract implements Serializable {
 //        this.contractOptionsById = contractOptionsById;
 //    }
 //
-//    @OneToMany(mappedBy = "contractByContractId")
-//    public Collection<ContractTariff> getContractTariffsById() {
-//        return contractTariffsById;
-//    }
-//
-//    public void setContractTariffsById(Collection<ContractTariff> contractTariffsById) {
-//        this.contractTariffsById = contractTariffsById;
-//    }
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "contractTariffsById", fetch = FetchType.LAZY)
+    public Collection<ContractTariff> getContractTariffsById() {
+        return contractTariffsById;
+    }
+
+    public void setContractTariffsById(Collection<ContractTariff> contractTariffsById) {
+        this.contractTariffsById = contractTariffsById;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
     public User getCustomer() {
         return customer;
@@ -134,5 +139,15 @@ public class Contract implements Serializable {
 
     public void setCustomer(User customer) {
         this.customer = customer;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tariff_id", referencedColumnName = "id", nullable = false)
+    public Tariff getCurrentTariff() {
+        return currentTariff;
+    }
+
+    public void setCurrentTariff(Tariff currentTariff) {
+        this.currentTariff = currentTariff;
     }
 }

@@ -39,4 +39,11 @@ public class UserDAOImpl implements UserDAO {
         Hibernate.initialize(user.getUserContractsById());
         return user;
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.MANDATORY)
+    public void save(User user) {
+        sessionFactory.getCurrentSession().persist(user);
+    }
+
 }

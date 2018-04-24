@@ -7,7 +7,6 @@ import ru.tsystems.javaschool.mobile_operator.dto.UserDTO;
 import java.util.List;
 
 public interface UserController {
-    ResponseEntity<List<UserDTO>> findAll();
-    ResponseEntity<UserDTO> find(long id);
-    String getAll(Model model);
+    String findAll(Model model);
+    String findById(long id, Model model);
 }

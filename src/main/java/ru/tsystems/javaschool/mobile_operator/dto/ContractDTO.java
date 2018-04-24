@@ -1,11 +1,16 @@
 package ru.tsystems.javaschool.mobile_operator.dto;
 
 import ru.tsystems.javaschool.mobile_operator.entity.Contract;
+import ru.tsystems.javaschool.mobile_operator.entity.ContractTariff;
+import ru.tsystems.javaschool.mobile_operator.entity.Tariff;
 import ru.tsystems.javaschool.mobile_operator.entity.User;
 
 import javax.persistence.Transient;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class ContractDTO implements Serializable, AbstractDTO<Contract> {
     private long id;
@@ -16,11 +21,15 @@ public class ContractDTO implements Serializable, AbstractDTO<Contract> {
     private boolean isActive;
     @Transient
     private UserDTO customer = null;
+    @Transient
+    private TariffDTO tariff = null;
+    @Transient
+    private Collection<ContractTariffDTO> oldTariffs = new ArrayList<>();
 
     public ContractDTO() {
     }
 
-    public ContractDTO(long id, String phoneNumber, long balance, Date startDate, Date endDate, boolean isActive, UserDTO customer) {
+    public ContractDTO(long id, String phoneNumber, long balance, Date startDate, Date endDate, boolean isActive) {
         this.id = id;
         this.phoneNumber = phoneNumber;
         this.balance = balance;
@@ -38,8 +47,10 @@ public class ContractDTO implements Serializable, AbstractDTO<Contract> {
         this.isActive = contract.isActive();
     }
 
-    public void fill(User customer) {
+    public void fill(User customer, Tariff currentTariff, Collection<ContractTariff> oldTariffs) {
         this.customer = new UserDTO(customer);
+        this.tariff = new TariffDTO(currentTariff);
+        setOldTariffs(oldTariffs);
     }
 
     public long getId() {
@@ -96,6 +107,28 @@ public class ContractDTO implements Serializable, AbstractDTO<Contract> {
 
     public void setCustomer(UserDTO customer) {
         this.customer = customer;
+    }
+
+    public TariffDTO getTariff() {
+        return tariff;
+    }
+
+    public void setTariff(TariffDTO tariffDTO) {
+        this.tariff = tariffDTO;
+    }
+
+    public Collection<ContractTariffDTO> getOldTariffs() {
+        return oldTariffs;
+    }
+
+    public void setOldTariffs(Collection<ContractTariff> oldTariffs) {
+        List<ContractTariffDTO> tariffDTOS = new ArrayList<>();
+        for (ContractTariff oldTariff: oldTariffs) {
+            ContractTariffDTO contractTariffDTO = new ContractTariffDTO(oldTariff);
+            contractTariffDTO.setTariffDTO(new TariffDTO(oldTariff.getTariffById()));
+            this.oldTariffs.add(contractTariffDTO);
+        }
+        this.oldTariffs = tariffDTOS;
     }
 
     @Override

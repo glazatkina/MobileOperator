@@ -160,7 +160,6 @@ public class UserDTO implements Serializable, AbstractDTO<User> {
     @Override
     public User toEntity() {
         User user = new User();
-        user.setId(getId());
         user.setAddress(getAddress());
         user.setDateBirth(getDateBirth());
         user.setEmail(getEmail());

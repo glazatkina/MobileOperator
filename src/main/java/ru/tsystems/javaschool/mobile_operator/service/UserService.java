@@ -7,4 +7,5 @@ import java.util.List;
 public interface UserService {
     List<UserDTO> findAll();
     UserDTO find(long id);
+    long register(UserDTO userDTO);
 }

@@ -47,4 +47,14 @@ public class UserServiceImpl implements UserService {
         }
         return userDTO;
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public long register(UserDTO userDTO) {
+        User user = userDTO.toEntity();
+        userDAO.save(user);
+        return user.getId();
+    }
+
+
 }

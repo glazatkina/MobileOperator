@@ -8,4 +8,5 @@ public interface UserDAO {
     List<User> findAll();
     User findById(long id);
     void save(User user);
+    void update(User user);
 }

@@ -14,7 +14,8 @@ public class Tariff implements Serializable {
     private boolean isActive;
     @Transient
     private Collection<ContractTariff> contractTariffsById;
-//    private Collection<TariffOption> tariffOptionsById;
+    @Transient
+    private Collection<TariffOption> tariffOptionsById;
 //    private Collection<TariffService> tariffServicesById;
 
     @Id
@@ -83,15 +84,14 @@ public class Tariff implements Serializable {
         this.contractTariffsById = contractTariffsById;
     }
 
-//    @OneToMany(mappedBy = "tariffByTariffId")
-//    public Collection<TariffOption> getTariffOptionsById() {
-//        return tariffOptionsById;
-//    }
-//
-//    public void setTariffOptionsById(Collection<TariffOption> tariffOptionsById) {
-//        this.tariffOptionsById = tariffOptionsById;
-//    }
-//
+    @OneToMany(mappedBy = "tariffByTariffId")
+    public Collection<TariffOption> getTariffOptionsById() {
+        return tariffOptionsById;
+    }
+
+    public void setTariffOptionsById(Collection<TariffOption> tariffOptionsById) {
+        this.tariffOptionsById = tariffOptionsById;
+    }
 //    @OneToMany(mappedBy = "tariffByTariffId")
 //    public Collection<TariffService> getTariffServicesById() {
 //        return tariffServicesById;

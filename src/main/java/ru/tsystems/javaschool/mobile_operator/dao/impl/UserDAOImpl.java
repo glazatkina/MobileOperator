@@ -46,4 +46,9 @@ public class UserDAOImpl implements UserDAO {
         sessionFactory.getCurrentSession().persist(user);
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.MANDATORY)
+    public void update(User user) {
+        sessionFactory.getCurrentSession().update(user);
+    }
 }

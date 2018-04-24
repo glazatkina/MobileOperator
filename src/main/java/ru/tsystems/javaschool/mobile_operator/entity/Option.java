@@ -19,6 +19,8 @@ public class Option implements Serializable {
     private Measure measure;
     @Transient
     private Collection<OptionOption> dependentOptions;
+    @Transient
+    private Collection<TariffOption> tariffOptionsById;
 
     public Option() {
     }
@@ -128,12 +130,12 @@ public class Option implements Serializable {
         this.dependentOptions = dependentOptions;
     }
 
-//    @OneToMany(mappedBy = "optionByOptionId")
-//    public Collection<TariffOption> getTariffOptionsById() {
-//        return tariffOptionsById;
-//    }
-//
-//    public void setTariffOptionsById(Collection<TariffOption> tariffOptionsById) {
-//        this.tariffOptionsById = tariffOptionsById;
-//    }
+    @OneToMany(mappedBy = "optionByOptionId")
+    public Collection<TariffOption> getTariffOptionsById() {
+        return tariffOptionsById;
+    }
+
+    public void setTariffOptionsById(Collection<TariffOption> tariffOptionsById) {
+        this.tariffOptionsById = tariffOptionsById;
+    }
 }
